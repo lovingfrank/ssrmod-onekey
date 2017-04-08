@@ -34,7 +34,7 @@ echo '#############################################
 ##############这里做基本配置#################
 #############################################'
 
-echo "按 <1>glzjinmod，按<2>使用modwebapi，其他键退出:"
+echo "按<1>使用glzjinmod，按<2>使用modwebapi，其他键退出:"
 read pd
 if [ "$pd" == "1" ] ; then
 cp apiconfig.py userapiconfig.py
@@ -59,6 +59,8 @@ sed -i '/ANTISSATTACK/d' userapiconfig.py
 sed -i '7a ANTISSATTACK = '$ANTISSATTACK'' userapiconfig.py
 sed -i '/MU_SUFFIX/d' userapiconfig.py
 sed -i "10a MU_SUFFIX = '$suffix'" userapiconfig.py
+sed -i '/API_INTERFACE/d' userapiconfig.py
+sed -i "14a API_INTERFACE = 'glzjinmod'" userapiconfig.py
 sed -i '/MYSQL_HOST/d' userapiconfig.py
 sed -i "23a MYSQL_HOST = '$ip'" userapiconfig.py
 sed -i '/MYSQL_USER/d' userapiconfig.py
