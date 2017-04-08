@@ -43,6 +43,8 @@ echo "请输入你的节点ID:"
 read nodeid
 echo "自动封禁SS密码和加密方式错误的 IP，1为开启，0为关闭:"
 read ANTISSATTACK
+echo "请输入你的混淆参数:"
+read suffix
 echo "请输入你的Mysql地址:"
 read ip
 echo "请输入你的Mysql用户名:"
@@ -55,6 +57,8 @@ sed -i '/NODE_ID/d' userapiconfig.py
 sed -i '1a NODE_ID = '$nodeid'' userapiconfig.py
 sed -i '/ANTISSATTACK/d' userapiconfig.py
 sed -i '7a ANTISSATTACK = '$ANTISSATTACK'' userapiconfig.py
+sed -i '/MU_SUFFIX/d' userapiconfig.py
+sed -i "10a MU_SUFFIX = '$suffix'" userapiconfig.py
 sed -i '/MYSQL_HOST/d' userapiconfig.py
 sed -i "23a MYSQL_HOST = '$ip'" userapiconfig.py
 sed -i '/MYSQL_USER/d' userapiconfig.py
@@ -64,7 +68,7 @@ sed -i "26a MYSQL_PASS = '$pwd'" userapiconfig.py
 sed -i '/MYSQL_DB/d' userapiconfig.py
 sed -i "27a MYSQL_DB = '$dbname'" userapiconfig.py
 
-if [ "$pd" == "2" ] ; then
+elif [ "$pd" == "2" ] ; then
 cp apiconfig.py userapiconfig.py
 cp config.json user-config.json
 echo "请输入你的节点ID:"
@@ -87,14 +91,14 @@ sed -i '/WEBAPI_URL/d' userapiconfig.py
 sed -i "16a WEBAPI_URL = '$apiurl'" userapiconfig.py
 sed -i '/WEBAPI_TOKEN/d' userapiconfig.py
 sed -i "17a WEBAPI_TOKEN = '$apitoken'" userapiconfig.py
-
+fi
 echo ' #########开始安装supervisiord#########'
 
 wget –no-check-certificate https://pypi.python.org/packages/source/s/supervisor/supervisor-3.0.tar.gz
 tar -zxvf supervisor-3.0.tar.gz && cd supervisor-3.0
 python setup.py install
-wget https://github.com/glzjin/ssshell-jar/raw/master/supervisord.conf -O /etc/supervisord.conf
-wget https://github.com/glzjin/ssshell-jar/raw/master/supervisord -O /etc/init.d/supervisord
+echo_supervisord_conf > /etc/supervisord.conf
+wget https://github.com/lovingfrank/ssrmod-onekey/raw/master/supervisord -O /etc/init.d/supervisord
 sed -i '$a [program:shadowsocks]' /etc/supervisord.conf
 sed -i '$a command = python server.py' /etc/supervisord.conf
 sed -i '$a directory = /root/shadowsocks' /etc/supervisord.conf
@@ -107,7 +111,6 @@ sed -i '$a startsecs=3' /etc/supervisord.conf
 /usr/bin/supervisord -c /etc/supervisord.conf
 supervisorctl reload 
 sed -i '$a\supervisord' /etc/rc.d/rc.local
-fi
 
 echo '如果你是Centos7，请按<Y>继续设置开机启动,否则按其他键退出:'
 read c7
