@@ -101,6 +101,8 @@ tar -zxvf supervisor-3.0.tar.gz && cd supervisor-3.0
 python setup.py install
 echo_supervisord_conf > /etc/supervisord.conf
 wget https://github.com/lovingfrank/ssrmod-onekey/raw/master/supervisord -O /etc/init.d/supervisord
+chmod 755 /etc/init.d/supervisord
+chkconfig supervisord on
 sed -i '$a [program:shadowsocks]' /etc/supervisord.conf
 sed -i '$a command = python server.py' /etc/supervisord.conf
 sed -i '$a directory = /root/shadowsocks' /etc/supervisord.conf
@@ -110,26 +112,11 @@ sed -i '$a autorestart=true' /etc/supervisord.conf
 sed -i '$a stderr_logfile = /var/log/shadowsocks.log' /etc/supervisord.conf
 sed -i '$a stdout_logfile = /var/log/shadowsocks.log' /etc/supervisord.conf
 sed -i '$a startsecs=3' /etc/supervisord.conf
-/usr/bin/supervisord -c /etc/supervisord.conf
-supervisorctl reload 
-sed -i '$a\supervisord' /etc/rc.d/rc.local
+service supervisord start
 
-echo '如果你是Centos7，请按<Y>继续设置开机启动,否则按其他键退出:'
-read c7
-if [ "$c7" == "Y" ] ; then
-cd /root
-echo "#!/bin/sh" >supervisord.sh
-sed -i '$a #chkconfig: 2345 80 80' supervisord.sh
-sed -i '$a #description: auto start supervisord' supervisord.sh
-sed -i '$a supervisord' supervisord.sh
-chmod +x supervisord.sh
-mv supervisord.sh /etc/init.d/ 
-chkconfig --add supervisord.sh
-chkconfig --list supervisord.sh
-fi
 echo "配置完成，Enjoy it！"
 echo "查看SS日志命令为supervisorctl tail -f shadowsocks stderr"
-echo "重启SS守护命令为supervisorctl restart shadowsocks"
-echo "停止SS守护命令为supervisorctl stop shadowsocks"
+echo "重启SS守护命令为supervisorctl restart shadowsocks或service supervisord restart"
+echo "停止SS守护命令为supervisorctl stop shadowsocks或service supervisord stop"
 echo "如果SS正常启动后，无法“上网”请检查iptables配置"
 echo "制作人：Matt QQ：6637456"
