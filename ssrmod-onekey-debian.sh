@@ -48,6 +48,8 @@ echo "请输入你的节点ID:"
 read nodeid
 echo "自动封禁SS密码和加密方式错误的 IP，1为开启，0为关闭:"
 read ANTISSATTACK
+echo "是否开启详细日志，1为开启，0为关闭:"
+read connect_verbose_info
 echo "请输入你的混淆参数:"
 read suffix
 echo "请输入你的Mysql地址:"
@@ -74,6 +76,8 @@ sed -i '/MYSQL_PASS/d' userapiconfig.py
 sed -i "26a MYSQL_PASS = '$pwd'" userapiconfig.py
 sed -i '/MYSQL_DB/d' userapiconfig.py
 sed -i "27a MYSQL_DB = '$dbname'" userapiconfig.py
+sed -i '/connect_verbose_info/d' user-config.json
+sed -i "18a \    \"connect_verbose_info\": $connect_verbose_info\," user-config.json
 
 elif [ "$pd" == "2" ] ; then
 cp apiconfig.py userapiconfig.py
@@ -82,6 +86,8 @@ echo "请输入你的节点ID:"
 read nodeid
 echo "自动封禁SS密码和加密方式错误的 IP，1为开启，0为关闭:"
 read ANTISSATTACK
+echo "是否开启详细日志，1为开启，0为关闭:"
+read connect_verbose_info
 echo "请输入你的混淆参数:"
 read suffix
 echo "请输入你的webapi地址:"
@@ -98,6 +104,8 @@ sed -i '/WEBAPI_URL/d' userapiconfig.py
 sed -i "16a WEBAPI_URL = '$apiurl'" userapiconfig.py
 sed -i '/WEBAPI_TOKEN/d' userapiconfig.py
 sed -i "17a WEBAPI_TOKEN = '$apitoken'" userapiconfig.py
+sed -i '/connect_verbose_info/d' user-config.json
+sed -i "18a \    \"connect_verbose_info\": $connect_verbose_info\," user-config.json
 fi
 
 echo ' #########开始安装supervisiord#########'
