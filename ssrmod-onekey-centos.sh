@@ -21,7 +21,7 @@ ldconfig
 echo ' ########开始安装meld3#########'
 wget http://pkgs.fedoraproject.org/repo/pkgs/python-meld3/meld3-1.0.2.tar.gz/3ccc78cd79cffd63a751ad7684c02c91/meld3-1.0.2.tar.gz
 tar zxvf meld3-1.0.2.tar.gz
-cd meld3-1.0.2
+cd meld3-1.0.2.tar.gz
 python setup.py install
 echo ' ##########开始安装cymysql###########'
 pip install cymysql
