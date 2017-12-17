@@ -6,7 +6,7 @@ echo '#############################################
 echo '确认安装请按<Y>:'
 read con
 if [ "$con" == "Y" ] ; then
-cd ~
+cd /root
 yum install -y wget
 yum install -y python-setuptools && easy_install pip
 yum install -y git
@@ -18,18 +18,13 @@ tar xf libsodium-1.0.10.tar.gz && cd libsodium-1.0.10
 ./configure && make -j2 && make install
 echo /usr/local/lib > /etc/ld.so.conf.d/usr_local_lib.conf
 ldconfig
-echo ' ########开始安装meld3#########'
-wget http://pkgs.fedoraproject.org/repo/pkgs/python-meld3/meld3-1.0.2.tar.gz/3ccc78cd79cffd63a751ad7684c02c91/meld3-1.0.2.tar.gz
-tar zxvf meld3-1.0.2.tar.gz
-cd meld3-1.0.2.tar.gz
-python setup.py install
 echo ' ##########开始安装cymysql###########'
 pip install cymysql
 yum -y install python-devel
 yum -y install libffi-devel
 yum -y install openssl-devel
 echo ' ##########开始安装魔改后端###########'
-cd ~
+cd /root
 git clone -b manyuser https://github.com/glzjin/shadowsocks.git
 cd shadowsocks
 pip install -r requirements.txt
