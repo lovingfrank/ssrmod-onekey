@@ -6,12 +6,24 @@ echo '#############################################
 echo '确认安装请按<Y>:'
 read con
 if [ "$con" == "Y" ] ; then
-cd /root
+cd ~
 yum install -y wget
-yum install -y python-setuptools && easy_install pip
+yum install -y python-setuptools
 yum install -y git
 
+echo ' ##########开始安装pip###########'
+wget --no-check-certificate  https://pypi.python.org/packages/26/d1/dc7fe14ce4a3ff3faebf1ac11350de4104ea2d2a80c98393b55c84362b0c/setuptools-32.1.0.tar.gz
+tar zxvf setuptools-32.1.0.tar.gz
+cd setuptools-32.1.0.tar.gz
+python setup.py build
+echo ' ##########开始安装meld3###########'
+cd ~
+wget http://pkgs.fedoraproject.org/repo/pkgs/python-meld3/meld3-1.0.2.tar.gz/3ccc78cd79cffd63a751ad7684c02c91/meld3-1.0.2.tar.gz
+tar zxvf meld3-1.0.2.tar.gz
+cd meld3-1.0.2
+python setup.py install
 echo ' ########开始安装libsodium#########'
+cd ~
 yum -y groupinstall "Development Tools"
 wget https://github.com/jedisct1/libsodium/releases/download/1.0.10/libsodium-1.0.10.tar.gz
 tar xf libsodium-1.0.10.tar.gz && cd libsodium-1.0.10
@@ -24,7 +36,7 @@ yum -y install python-devel
 yum -y install libffi-devel
 yum -y install openssl-devel
 echo ' ##########开始安装魔改后端###########'
-cd /root
+cd ~
 git clone -b manyuser https://github.com/glzjin/shadowsocks.git
 cd shadowsocks
 pip install -r requirements.txt
