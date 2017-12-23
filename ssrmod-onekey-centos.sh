@@ -12,10 +12,10 @@ yum install -y python-setuptools
 yum install -y git
 
 echo ' ##########开始安装pip###########'
-wget --no-check-certificate  https://pypi.python.org/packages/26/d1/dc7fe14ce4a3ff3faebf1ac11350de4104ea2d2a80c98393b55c84362b0c/setuptools-32.1.0.tar.gz
-tar zxvf setuptools-32.1.0.tar.gz
-cd setuptools-32.1.0.tar.gz
-python setup.py build
+wget --no-check-certificate  https://pypi.python.org/packages/11/b6/abcb525026a4be042b486df43905d6893fb04f05aac21c32c638e939e447/pip-9.0.1.tar.gz
+tar zxvf pip-9.0.1.tar.gz
+cd pip-9.0.1
+python setup.py install
 echo ' ##########开始安装meld3###########'
 cd ~
 wget http://pkgs.fedoraproject.org/repo/pkgs/python-meld3/meld3-1.0.2.tar.gz/3ccc78cd79cffd63a751ad7684c02c91/meld3-1.0.2.tar.gz
