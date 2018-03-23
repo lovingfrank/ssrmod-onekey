@@ -67,6 +67,8 @@ echo "请输入你的Mysql密码:"
 read pwd
 echo "请输入你的Mysql数据库名:"
 read dbname
+echo "如果你是Centos6，按<1>"
+read c7
 sed -i '/NODE_ID/d' userapiconfig.py
 sed -i '1a NODE_ID = '$nodeid'' userapiconfig.py
 sed -i '/ANTISSATTACK/d' userapiconfig.py
