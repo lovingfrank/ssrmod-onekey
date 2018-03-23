@@ -101,6 +101,8 @@ echo "请输入你的webapi地址:"
 read apiurl
 echo "请输入你的webapi token:"
 read apitoken
+echo "如果你是Centos6，按<1>"
+read c7
 sed -i '/NODE_ID/d' userapiconfig.py
 sed -i '1a NODE_ID = '$nodeid'' userapiconfig.py
 sed -i '/ANTISSATTACK/d' userapiconfig.py
@@ -120,9 +122,6 @@ wget –no-check-certificate https://pypi.python.org/packages/source/s/superviso
 tar -zxvf supervisor-3.0.tar.gz && cd supervisor-3.0
 python setup.py install
 echo_supervisord_conf > /etc/supervisord.conf
-wget https://github.com/lovingfrank/ssrmod-onekey/raw/master/supervisord -O /etc/init.d/supervisord
-chmod 755 /etc/init.d/supervisord
-chkconfig supervisord on
 sed -i '$a [program:shadowsocks]' /etc/supervisord.conf
 sed -i '$a command = python server.py' /etc/supervisord.conf
 sed -i '$a directory = /root/shadowsocks' /etc/supervisord.conf
@@ -132,7 +131,24 @@ sed -i '$a autorestart=true' /etc/supervisord.conf
 sed -i '$a stderr_logfile = /var/log/shadowsocks.log' /etc/supervisord.conf
 sed -i '$a stdout_logfile = /var/log/shadowsocks.log' /etc/supervisord.conf
 sed -i '$a startsecs=3' /etc/supervisord.conf
+
+if [ "$c7" == "1" ] ; then
+wget https://github.com/lovingfrank/ssrmod-onekey/raw/master/supervisord -O /etc/init.d/supervisord
+chmod 755 /etc/init.d/supervisord
+chkconfig supervisord on
 service supervisord start
+
+elif [ "$pd" != "1" ] ; then
+cd ~
+echo "#!/bin/sh" >supervisord.sh
+sed -i '$a #chkconfig: 2345 80 80' supervisord.sh
+sed -i '$a #description: auto start supervisord' supervisord.sh
+sed -i '$a supervisord' supervisord.sh
+chmod +x supervisord.sh
+mv supervisord.sh /etc/init.d/ 
+chkconfig --add supervisord.sh
+chkconfig --list supervisord.sh
+fi
 
 echo "配置完成，Enjoy it！"
 echo "查看SS日志命令为supervisorctl tail -f shadowsocks stderr"
