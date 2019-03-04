@@ -37,7 +37,7 @@ yum -y install libffi-devel
 yum -y install openssl-devel
 echo ' ##########开始安装魔改后端###########'
 cd ~
-git clone -b manyuser https://github.com/glzjin/shadowsocks.git
+git clone -b manyuser https://github.com/NimaQu/shadowsocks.git
 cd shadowsocks
 pip install -r requirements.txt
 fi
