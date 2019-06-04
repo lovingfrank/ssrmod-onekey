@@ -150,6 +150,7 @@ chmod +x supervisord.sh
 mv supervisord.sh /etc/init.d/ 
 chkconfig --add supervisord.sh
 chkconfig --list supervisord.sh
+/usr/bin/supervisord -c /etc/supervisord.conf
 fi
 
 echo "配置完成，Enjoy it！"
