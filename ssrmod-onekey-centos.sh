@@ -39,6 +39,7 @@ echo ' ##########开始安装魔改后端###########'
 cd ~
 git clone -b manyuser https://github.com/Anankke/shadowsocks-mod.git shadowsocks
 cd shadowsocks
+git reset --hard efc986b731164aae3fef6fb5b9e8802754e63e3e
 pip install -r requirements.txt
 fi
 echo '#############################################
